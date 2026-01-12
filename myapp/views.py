@@ -274,14 +274,27 @@ def stripe_webhook(request):
         if Order.objects.filter(stripe_session_id=session.id).exists():
             return HttpResponse(status=200)
 
+        customer_details = session.get("customer_details") or {}
+        full_name = customer_details.get("name") or ""
+        name_parts = full_name.split()
+        first_name = name_parts[0] if name_parts else "Stripe"
+        last_name = " ".join(name_parts[1:]) if len(name_parts) > 1 else "Customer"
+        address = customer_details.get("address") or {}
+
         order = Order.objects.create(
-            email=session.customer_details.email,
+            email=customer_details.get("email") or session.get("customer_email") or "",
+            first_name=first_name,
+            last_name=last_name,
+            address=address.get("line1") or "",
+            city=address.get("city") or "",
+            postal_code=address.get("postal_code") or "",
+            country=address.get("country") or "Canada",
             total=Decimal(session.amount_total) / 100,
             stripe_session_id=session.id,
             paid=True,
         )
 
-        for sale_id, quantity in session.metadata.items():
+        for sale_id, quantity in (session.metadata or {}).items():
             sale = Sales.objects.get(id=sale_id)
             OrderItem.objects.create(
                 order=order,
@@ -289,5 +302,32 @@ def stripe_webhook(request):
                 quantity=int(quantity),
                 price=sale.price,
             )
+
+        customer_id = session.get("customer")
+        if not customer_id:
+            customer = stripe.Customer.create(
+                email=order.email,
+                name=full_name or f"{order.first_name} {order.last_name}".strip(),
+                address=address or None,
+            )
+            customer_id = customer.id
+
+        for item in order.items.all():
+            stripe.InvoiceItem.create(
+                customer=customer_id,
+                currency="cad",
+                description=item.sale.name,
+                unit_amount=int(item.price * 100),
+                quantity=item.quantity,
+            )
+
+        invoice = stripe.Invoice.create(
+            customer=customer_id,
+            auto_advance=True,
+            metadata={"order_id": str(order.id)},
+        )
+        finalized = stripe.Invoice.finalize_invoice(invoice.id)
+        if finalized.status != "paid":
+            stripe.Invoice.pay(finalized.id, paid_out_of_band=True)
 
     return HttpResponse(status=200)
