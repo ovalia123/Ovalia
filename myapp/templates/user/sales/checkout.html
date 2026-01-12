@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+		<div class="container">
+		<a class="navbar-brand" href={% url 'index' %}><img class="logo" src={% static 'images/big_logo_black.png' %} alt="Ovalia Atelier"></a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsFurni">
+			<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+				<li>
+					<a class="nav-link" href= {% url 'index' %}>Accueil</a>
+				</li>
+				</li class="nav-item active">
+          <a class="nav-link" style="text-color:black;" href="{% url 'boutique' %}">Boutique</a>
+        </li>
+        <li ><a class="nav-link" href={% url 'shop' %}>Bracelet</a></li>
+        
+        <li><a class="nav-link" href={% url 'event' %}>Evenement</a></li>
+        <li ><a class="nav-link" href={% url 'faq' %}>FAQ</a></li>
+        <li><a class="nav-link" href={% url 'contact' %}>Contact</a></li>
+        <li><a class="nav-link" href="{% url 'cart' %}"><img src={% static 'images/cart.svg' %}></a></li>
+			</ul>
+			
+		</div>
+		</div>
+	</nav>
+
+
+<style>
+/* ================= CHECKOUT – OVALIA ================= */
+
+.checkout-section {
+  background: #f6efe6;
+  padding: 60px 0;
+}
+
+.checkout-title {
+  text-align: center;
+  font-family: serif;
+  font-weight: 400;
+  margin-bottom: 50px;
+}
+
+.checkout-box,
+.checkout-summary {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 30px;
+}
+
+.checkout-box h4,
+.checkout-summary h4 {
+  font-family: serif;
+  font-weight: 400;
+  margin-bottom: 25px;
+}
+
+.form-control {
+  border-radius: 8px;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #000;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.checkout-note {
+  color: #666;
+  font-size: 0.85rem;
+  margin-top: 20px;
+}
+
+.back-link {
+  color: #000;
+  text-decoration: underline;
+  font-size: 0.85rem;
+}
+
+.btn-dark {
+  border-radius: 30px;
+  padding: 12px;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .checkout-box,
+  .checkout-summary {
+    padding: 25px;
+  }
+}
+</style>
+
+<section class="checkout-section">
+  <div class="container">
+
+    <h2 class="checkout-title">Finaliser la commande</h2>
+
+    <div class="row g-5">
+
+      <!-- ================= LEFT ================= -->
+      <div class="col-md-7">
+        <div class="checkout-box">
+
+          <h4>Informations client</h4>
+
+          <form>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <input class="form-control" placeholder="Prénom" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <input class="form-control" placeholder="Nom" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <input class="form-control" placeholder="Adresse courriel" type="email" required>
+            </div>
+
+            <div class="mb-3">
+              <input class="form-control" placeholder="Adresse" required>
+            </div>
+
+            <div class="mb-3">
+              <input class="form-control" placeholder="Appartement, suite (optionnel)">
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <input class="form-control" placeholder="Ville" required>
+              </div>
+              <div class="col-md-3 mb-3">
+                <input class="form-control" placeholder="Code postal" required>
+              </div>
+              <div class="col-md-3 mb-3">
+                <input class="form-control" value="Canada" required>
+              </div>
+            </div>
+
+            <div class="checkout-note">
+              Paiement sécurisé via Stripe.  
+              Aucune information bancaire n’est stockée.
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+      <!-- ================= RIGHT ================= -->
+      <div class="col-md-5">
+        <div class="checkout-summary">
+
+          <h4>Votre commande</h4>
+
+          {% for item in cart.items.all %}
+          <div class="summary-item">
+            <div>
+              <strong>{{ item.product.name }}</strong><br>
+              <small>Quantité : {{ item.quantity }}</small>
+            </div>
+            <div>{{ item.total_price }} $</div>
+          </div>
+          {% endfor %}
+
+          <hr>
+
+          <div class="summary-line">
+            <span>Sous-total</span>
+            <span>${{ total }}</span>
+            </div>
+
+            <div class="summary-line">
+            <span>Livraison</span>
+            <span>Gratuite</span>
+            </div>
+
+            <hr>
+
+            <div class="summary-total">
+            <span>Total</span>
+            <span>${{ total }}</span>
+            </div>
+
+
+          <form method="post" action="{% url 'create-checkout-session' %}">
+            {% csrf_token %}
+            <button class="btn btn-dark w-100 mt-4">
+              Procéder au paiement
+            </button>
+          </form>
+
+          <div class="text-center mt-3">
+            <a href="{% url 'cart' %}" class="back-link">
+              Retour au panier
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,348 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="fr">
+
+{% block content %}	
+<body>
+
+
+
+
+
+
+  <!-- Start Header/Navigation -->
+  <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+		<div class="container">
+    <a class="navbar-brand" href={% url 'index' %}><img class="logo" src={% static 'images/big_logo_black.png' %} alt="Ovalia Atelier"></a>
+
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsFurni">
+			<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+				<li>
+					<a class="nav-link" href= {% url 'index' %}>Accueil</a>
+				</li>
+				</li>
+            <a class="nav-link" style="text-color:black;" href="{% url 'boutique' %}">Boutique</a>
+          </li>
+          <li><a class="nav-link" href={% url 'shop' %}>Bracelet</a></li>
+          
+          <li><a class="nav-link" href={% url 'event' %}>Evenement</a></li>
+          <li class="nav-item active"><a class="nav-link" href={% url 'faq' %}>FAQ</a></li>
+          <li><a class="nav-link" href={% url 'contact' %}>Contact</a></li>
+			    <li><a class="nav-link" href="{% url 'cart' %}"><img src={% static 'images/cart.svg' %}></a></li>
+			
+		</div>
+		</div>
+	</nav>
+  <!-- End Header/Navigation -->
+
+
+
+
+
+  <!-- Start Hero Section -->
+  <div class="containerr">
+    <div class="faq-boxx">
+      <h1>FAQ</h1>
+      <p>
+        Nous répondons ici aux questions les plus importantes concernant nos bracelets et leur mise en place.
+        Si tu ne trouves pas de réponse à ta question ici, n'hésite pas à nous la poser par
+        <a href={% url 'contact' %}>e-mail</a>.
+      </p>
+    </div>
+  </div>
+  <!-- End Hero Section -->
+
+  <!-- Start FAQ Section -->
+  <div class="untree_co-section faq-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          
+          <!-- À PROPOS DE L'ARGENT STERLING SECTION -->
+          <div class="faq-block mb-5">
+            <h2 class="faq-heading">À propos de l'Argent Sterling (SS)</h2>
+            
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleAnswer('silver1')">
+                <h3>Qu'est-ce que l'Argent Sterling ?</h3>
+                <span class="toggle-icon">+</span>
+              </div>
+              <div class="faq-answer" id="silver1">
+                <p>L'argent sterling (SS) est composé d'au moins 92,5% d'argent pur. Les 7,5% restants sont principalement constitués de cuivre, ce qui rend le métal plus résistant et durable pour un usage quotidien. L'ajout de cuivre améliore l'intégrité structurelle de l'argent, qui est naturellement mou et malléable, et aide également à prévenir le ternissement.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleAnswer('silver2')">
+                <h3>L'Argent Sterling va-t-il ternir ?</h3>
+                <span class="toggle-icon">+</span>
+              </div>
+              <div class="faq-answer" id="silver2">
+                <p>Oui, l'argent sterling peut ternir avec le temps. Le ternissement est une réaction naturelle qui se produit lorsque l'argent entre en contact avec l'air et certains composés, principalement le soufre. Bien que l'argent sterling soit moins sujet au ternissement que l'argent pur, plusieurs facteurs peuvent y contribuer :</p>
+                <ul>
+                  <li>Exposition à l'air et à l'humidité</li>
+                  <li>Contact avec des produits chimiques (parfums, lotions, produits de nettoyage)</li>
+                  <li>Le pH naturel de la peau</li>
+                </ul>
+                <p>Heureusement, le ternissement est superficiel et peut être facilement éliminé avec un entretien régulier. Nous recommandons d'essuyer délicatement vos bijoux sterling après chaque utilisation pour les maintenir propres et brillants.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleAnswer('silver3')">
+                <h3>Peut-on être allergique à l'Argent Sterling ?</h3>
+                <span class="toggle-icon">+</span>
+              </div>
+              <div class="faq-answer" id="silver3">
+                <p>Tous nos bijoux en argent sterling .925 sont considérés comme hypoallergéniques. Nous garantissons qu'ils ne contiennent pas de nickel, de cadmium ou de substances cancérigènes.</p>
+                <p>Cependant, il existe différents types de sensibilités aux métaux. Certaines personnes peuvent être allergiques à l'argent sterling, notamment si elles sont sensibles au cuivre présent dans l'alliage. Ces personnes peuvent généralement ne porter que de l'or à haute teneur en carats (contenant un pourcentage plus faible de métaux de base).</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleAnswer('silver4')">
+                <h3>La chaîne en Argent Sterling peut-elle s'étirer ?</h3>
+                <span class="toggle-icon">+</span>
+              </div>
+              <div class="faq-answer" id="silver4">
+                <p>Oui, les chaînes en métaux précieux et semi-précieux peuvent s'étirer avec le temps. Plus la teneur en argent est élevée, plus le métal est malléable.</p>
+                <p>Les chaînes avec des maillons fins sont particulièrement susceptibles de s'étirer, ce qui est parfois souhaitable pour les bijoux permanents pour des raisons de sécurité. Les personnes très actives, comme les coureurs, peuvent constater plus fréquemment des étirements, des cassures ou des abrasions.</p>
+                <p>Plusieurs situations quotidiennes peuvent causer un étirement :</p>
+                <ul>
+                  <li>Coincer le bracelet dans une couverture pendant le sommeil</li>
+                  <li>Tirer sur le bracelet en enlevant des vêtements</li>
+                  <li>Manipuler fréquemment le bijou</li>
+                  <li>Pour les bracelets de cheville : frottement avec les chaussettes et chaussures</li>
+                </ul>
+                <p>Bien que nous appelions nos créations "Bijoux Permanents", ils nécessitent des soins appropriés et ne sont pas indestructibles, surtout lorsqu'ils sont portés en permanence.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- À PROPOS DE L'OR REMPLI SECTION -->
+          <div class="faq-block mb-5">
+            <h2 class="faq-heading">À propos de l'Or Rempli (Gold Filled - GF)</h2>
+            
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleAnswer('gold1')">
+                <h3>Qu'est-ce que l'Or Rempli ?</h3>
+                <span class="toggle-icon">+</span>
+              </div>
+              <div class="faq-answer" id="gold1">
+                <p>Le Gold Filled (GF) est un procédé de fabrication américain et une norme légale de qualité. Il est constitué de deux feuilles d'or massif (généralement 14 carats) liées sur une âme en laiton. Pour être légalement estampé "GF", le poids de l'or doit représenter au moins 1/20ème du poids total, d'où le marquage typique "1/20 14K GF" (signifiant que 5% de la pièce est en or 14 carats).</p>
+                <p>La couche d'or des bijoux remplis est environ 100 fois plus épaisse que celle des bijoux plaqués or, ce qui les rend beaucoup plus durables.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleAnswer('gold2')">
+                <h3>Quelle est la différence entre Or Rempli, Plaqué Or et Vermeil ?</h3>
+                <span class="toggle-icon">+</span>
+              </div>
+              <div class="faq-answer" id="gold2">
+                <ul>
+                  <li><strong>Or Rempli (GF)</strong> : Contient une couche substantielle d'or (1/20ème du poids) liée mécaniquement à un métal de base, généralement en laiton.</li>
+                  <li><strong>Plaqué Or</strong> : Fine couche d'or appliquée sur un métal de base par placage chimique ou électrochimique. Moins durable et plus susceptible de s'user rapidement.</li>
+                  <li><strong>Vermeil</strong> : Argent sterling recouvert d'au moins 2 microns d'or par placage.</li>
+                </ul>
+                <p>L'or rempli est considérablement plus durable que le plaqué or ou le vermeil car il contient 100 fois plus d'or que n'importe quel procédé de placage.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleAnswer('gold3')">
+                <h3>L'Or Rempli va-t-il ternir ?</h3>
+                <span class="toggle-icon">+</span>
+              </div>
+              <div class="faq-answer" id="gold3">
+                <p>Les bijoux en or rempli sont très durables, mais dans certaines circonstances, ils peuvent laisser des marques sombres sur la peau ou présenter des signes d'oxydation. Plusieurs facteurs peuvent influencer ce phénomène :</p>
+                <ol>
+                  <li><strong>Chimie corporelle</strong> : La composition unique de la peau de chaque personne, notamment les niveaux de pH, la composition de la sueur et l'acidité, peut affecter la réaction entre le métal et la peau.</li>
+                  <li><strong>Friction et humidité</strong> : Le contact avec la sueur ou l'eau peut accélérer les réactions. De même, les frottements contre la peau peuvent contribuer à l'apparition de marques.</li>
+                  <li><strong>Produits chimiques et cosmétiques</strong> : L'exposition à des cosmétiques, lotions, parfums, laques, teintures capillaires ou produits ménagers peut affecter l'apparence des bijoux en or rempli.</li>
+                  <li><strong>Facteurs environnementaux</strong> : La pollution de l'air, le soufre ou une humidité élevée peuvent accélérer le processus de ternissement.</li>
+                </ol>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleAnswer('gold4')">
+                <h3>Peut-on être allergique à l'Or Rempli ?</h3>
+                <span class="toggle-icon">+</span>
+              </div>
+              <div class="faq-answer" id="gold4">
+                <p>Tous nos bijoux en or rempli sont considérés comme hypoallergéniques. Nous garantissons qu'ils ne contiennent pas de nickel, de cadmium ou de substances cancérigènes.</p>
+                <p>Cependant, certaines personnes peuvent présenter des sensibilités au laiton utilisé comme base dans les bijoux en or rempli. Les personnes très sensibles au laiton peuvent avoir des réactions et préféreront peut-être des bijoux en or à haute teneur en carats.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleAnswer('gold5')">
+                <h3>La chaîne en Or Rempli peut-elle s'étirer ?</h3>
+                <span class="toggle-icon">+</span>
+              </div>
+              <div class="faq-answer" id="gold5">
+                <p>Oui, comme pour l'argent sterling, les chaînes en or rempli peuvent s'étirer. Plus la teneur en or est élevée, plus le métal est malléable.</p>
+                <p>Les mêmes facteurs s'appliquent : les maillons fins sont plus susceptibles de s'étirer, les personnes actives peuvent constater plus d'usure, et les situations quotidiennes (sommeil, habillage/déshabillage, manipulation fréquente) peuvent causer un étirement progressif.</p>
+                <p>Les bracelets de cheville peuvent s'étirer davantage en raison des mouvements plus importants et du contact avec les chaussures et chaussettes.</p>
+                <p>Bien que durables, nos bijoux permanents nécessitent des soins appropriés, surtout lorsqu'ils sont portés 24h/24 et 7j/7.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- CONSEILS D'ENTRETIEN SECTION -->
+          <div class="faq-block mb-5">
+            <h2 class="faq-heading">Conseils d'entretien</h2>
+            
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleAnswer('care1')">
+                <h3>Comment entretenir mes bijoux permanents ?</h3>
+                <span class="toggle-icon">+</span>
+              </div>
+              <div class="faq-answer" id="care1">
+                <ul>
+                  <li>Évitez le contact avec des produits chimiques agressifs (parfums, lotions, produits nettoyants)</li>
+                  <li>Essuyez délicatement vos bijoux après une journée active ou avant le coucher</li>
+                  <li>Évitez de tirer excessivement sur vos chaînes</li>
+                  <li>Lors d'activités physiques intenses, soyez conscient des risques d'étirement ou d'abrasion</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleAnswer('care2')">
+                <h3>Que faire si mon bijou permanent s'abîme ?</h3>
+                <span class="toggle-icon">+</span>
+              </div>
+              <div class="faq-answer" id="care2">
+                <p>Contactez-nous dès que possible. Bien que nos bijoux soient conçus pour durer, ils peuvent nécessiter des ajustements ou des réparations au fil du temps.</p>
+                <p>Pour toute question supplémentaire, n'hésitez pas à nous contacter à <a href="mailto:contact@ovalia.ch">bijouxovalia@gmail.com</a> ou par téléphone au <a href="tel:+41000000000">(514)-746-5469</a>.</p>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End FAQ Section -->
+
+  <!-- CSS for FAQ section -->
+  <style>
+    .faq-heading {
+      font-size: 24px;
+      margin-bottom: 30px;
+      color: #333;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+    
+    .faq-item {
+      margin-bottom: 15px;
+      border: 1px solid #eee;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    
+    .faq-question {
+      background-color: #f9f9f9;
+      padding: 15px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .faq-question h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 500;
+    }
+    
+    .toggle-icon {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    
+    .faq-answer {
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out, padding 0.3s ease;
+    }
+    
+    .faq-answer.show {
+      padding: 20px;
+      max-height: 1000px;
+      transition: max-height 0.5s ease-in, padding 0.3s ease;
+    }
+    
+    .faq-answer p, .faq-answer ul, .faq-answer ol {
+      margin-bottom: 15px;
+    }
+    
+    .faq-answer ul, .faq-answer ol {
+      padding-left: 20px;
+    }
+    
+    .hero {
+      background-color: #f8f9fa;
+      padding: 60px 0;
+      margin-bottom: 40px;
+    }
+    
+    .hero h1 {
+      font-size: 36px;
+      font-weight: bold;
+      color: #333;
+    }
+    .containerr {
+        background-image: url("");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding-left: 100px;
+        background-color:rgb(214, 190, 164); /* fallback background */
+      }
+      
+      .faq-boxx {
+        background-color: #f4ece5;
+        padding: 80px;
+        max-width: 700px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      }
+  </style>
+  
+  <!-- JavaScript for FAQ toggle functionality -->
+  <script>
+    function toggleAnswer(id) {
+      const answer = document.getElementById(id);
+      const questionElement = answer.previousElementSibling;
+      const toggleIcon = questionElement.querySelector('.toggle-icon');
+      
+      if (answer.classList.contains('show')) {
+        answer.classList.remove('show');
+        toggleIcon.textContent = '+';
+      } else {
+        answer.classList.add('show');
+        toggleIcon.textContent = '−';
+      }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // You can set the first item to be open by default if desired
+      // toggleAnswer('silver1');
+    });
+  </script>
+      
+{% endblock %}
+</document_content>

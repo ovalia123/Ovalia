@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <nav class="custom-navbar navbar navbar-expand-md bg-dark text-white shadow">
+    <div class="container mx-auto px-4">
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <img class="h-10" src="{% static 'images/big_logo_black.png' %}" alt="Ovalia Atelier">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+          <li><a class="nav-link px-2 text-white" href="{% url 'index' %}">Accueil</a></li>
+          {% if request.user.is_authenticated %}
+            <li><a class="nav-link px-2 text-white" href="{% url 'member' %}">Membre</a></li>
+          {% endif %}
+          <li><a class="nav-link px-2 text-white" href="{% url 'boutique' %}">Boutique</a></li>
+          <li><a class="nav-link px-2 text-white" href="{% url 'event' %}">Evenement</a></li>
+          <li><a class="nav-link px-2 text-white" href="{% url 'faq' %}">FAQ</a></li>
+          <li><a class="nav-link px-2 text-white" href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+        <ul class="navbar-nav mb-2 mb-md-0 ms-5">
+          {% if request.user.is_authenticated %}
+            <li>
+              <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="nav-link text-white">Logout</button>
+              </form>
+            </li>
+          {% else %}
+            <li><a class="nav-link" href="{% url 'login' %}"><img src="{% static 'images/user.svg' %}" alt="S'inscrire"></a></li>
+          {% endif %}
+          <li><a class="nav-link" href="{% url 'cart' %}"><img src="{% static 'images/cart.svg' %}" alt="Cart"></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Paiement Réussi</h1>
+    <p class="text-gray-600">Merci pour votre achat ! Votre commande a été traitée.</p>
+    <a href="{% url 'generate_invoice' order_id=order.id %}" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">Télécharger la facture</a>
+    <a href="{% url 'boutique' %}" class="mt-4 inline-block bg-green-500 text-white px-4 py-2 rounded">Continuer les achats</a>
+  </div>
+{% endblock %}

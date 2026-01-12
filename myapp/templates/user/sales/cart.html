@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+		<div class="container">
+		<a class="navbar-brand" href={% url 'index' %}><img class="logo" src={% static 'images/big_logo_black.png' %} alt="Ovalia Atelier"></a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsFurni">
+			<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+				<li>
+					<a class="nav-link" href= {% url 'index' %}>Accueil</a>
+				</li>
+				</li class="nav-item active">
+          <a class="nav-link" style="text-color:black;" href="{% url 'boutique' %}">Boutique</a>
+        </li>
+        <li ><a class="nav-link" href={% url 'shop' %}>Bracelet</a></li>
+        
+        <li><a class="nav-link" href={% url 'event' %}>Evenement</a></li>
+        <li ><a class="nav-link" href={% url 'faq' %}>FAQ</a></li>
+        <li><a class="nav-link" href={% url 'contact' %}>Contact</a></li>
+        <li><a class="nav-link" href="{% url 'cart' %}"><img src={% static 'images/cart.svg' %}></a></li>
+			</ul>
+			
+		</div>
+		</div>
+	</nav>
+
+<!-- ================= CART ================= -->
+<section class="cart-section">
+  <div class="container cart-container">
+
+    <div class="cart-header">
+      <h1>Votre panier</h1>
+      <a href="{% url 'boutique' %}" class="cart-back">Poursuivre vos achats</a>
+    </div>
+
+    {% if cart_items %}
+
+    <div class="cart-card">
+      {% for item in cart_items %}
+      <div class="cart-row">
+
+        <!-- Product -->
+        <div class="cart-product">
+          {% if item.sale.image %}
+            <img src="{{ item.sale.image.url }}" alt="{{ item.sale.name }}">
+          {% else %}
+            <img src="{% static 'images/product-1.png' %}" alt="{{ item.sale.name }}">
+          {% endif %}
+
+          <div>
+            <h5>{{ item.sale.name }}</h5>
+            <p>{{ item.sale.get_category_display|default:item.sale.category }}</p>
+            <span>${{ item.sale.price }} / unité</span>
+          </div>
+        </div>
+
+        <!-- Quantity -->
+        <div class="cart-qty">
+          <form method="post" action="{% url 'update_cart' item.sale.id %}">
+            {% csrf_token %}
+            <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+            <button type="submit">Mettre à jour</button>
+          </form>
+        </div>
+
+        <!-- Subtotal -->
+        <div class="cart-price">
+          ${{ item.subtotal }}
+        </div>
+
+        <!-- Remove -->
+        <div class="cart-remove">
+          <form method="post" action="{% url 'remove_from_cart' item.sale.id %}">
+            {% csrf_token %}
+            <button type="submit">Retirer</button>
+          </form>
+        </div>
+
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="cart-footer">
+      <h4>Total : ${{ total }}</h4>
+      <a href="{% url 'checkout' %}" class="checkout-btn">
+        Passer la commande
+      </a>
+
+    </div>
+
+    {% else %}
+
+    <div class="cart-empty">
+      <p>Votre panier est vide pour le moment.</p>
+      <a href="{% url 'boutique' %}" class="checkout-btn">Découvrir les bijoux</a>
+    </div>
+
+    {% endif %}
+
+  </div>
+</section>
+
+<!-- ================= STYLE ================= -->
+<style>
+/* GLOBAL */
+body {
+  background-color: #f3ede6;
+  color: #2b2b2b;
+  font-family: "Helvetica Neue", sans-serif;
+}
+
+h1, h4, h5 {
+  font-family: "Playfair Display", serif;
+  letter-spacing: 0.4px;
+}
+
+/* CART LAYOUT */
+.cart-section {
+  padding: 80px 0;
+}
+
+.cart-container {
+  max-width: 1080px;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.cart-header h1 {
+  font-size: 2.2rem;
+  font-weight: 500;
+}
+
+.cart-back {
+  text-decoration: none;
+  color: #2b2b2b;
+  border-bottom: 1px solid #2b2b2b;
+  font-size: 0.9rem;
+}
+
+/* CARD */
+.cart-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 10px 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+.cart-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  align-items: center;
+  padding: 30px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-row:last-child {
+  border-bottom: none;
+}
+
+/* PRODUCT */
+.cart-product {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.cart-product img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.cart-product h5 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.cart-product p {
+  margin: 4px 0;
+  color: #7a6f65;
+  font-size: 0.9rem;
+}
+
+.cart-product span {
+  font-size: 0.85rem;
+  color: #7a6f65;
+}
+
+/* QUANTITY */
+.cart-qty input {
+  width: 70px;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #d7c5b3;
+}
+
+.cart-qty button {
+  background: none;
+  border: none;
+  text-decoration: underline;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* PRICE */
+.cart-price {
+  font-weight: 500;
+  text-align: right;
+}
+
+/* REMOVE */
+.cart-remove button {
+  background: none;
+  border: none;
+  color: #9b4a4a;
+  cursor: pointer;
+}
+
+/* FOOTER */
+.cart-footer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkout-btn {
+  background: #2b2b2b;
+  color: white;
+  border-radius: 30px;
+  padding: 14px 36px;
+  border: none;
+  font-size: 0.9rem;
+}
+
+/* EMPTY */
+.cart-empty {
+  text-align: center;
+  padding: 80px 0;
+}
+</style>
+
+{% endblock %}

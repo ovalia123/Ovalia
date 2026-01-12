@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="fr">
+
+{% block content %}	
+<body>
+  <!-- Start Header/Navigation -->
+  <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+		<div class="container">
+		<a class="navbar-brand" href={% url 'index' %}><img class="logo" src={% static 'images/big_logo_black.png' %} alt="Ovalia Atelier"></a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsFurni">
+			<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+				<li>
+					<a class="nav-link" href= {% url 'index' %}>Accueil</a>
+				</li>
+				</li>
+				<a class="nav-link" style="text-color:black;" href="{% url 'boutique' %}">Boutique</a>
+				</li>
+				<li class="nav-item active"><a class="nav-link" href={% url 'shop' %}>Bracelet</a></li>
+				
+				<li><a class="nav-link" href={% url 'event' %}>Evenement</a></li>
+				<li ><a class="nav-link" href={% url 'faq' %}>FAQ</a></li>
+				<li><a class="nav-link" href={% url 'contact' %}>Contact</a></li>
+				<li><a class="nav-link" href="{% url 'cart' %}"><img src={% static 'images/cart.svg' %}></a></li>
+			</ul>
+		</div>
+		</div>
+	</nav>
+    <!-- Start Charms Collection Section -->
+    <section class="py-5" style="background-color:#c0a893;">
+    <div class="container text-center">
+        <img 
+        src="{% static 'images/charms.jpeg' %}" 
+        alt="Charms Ovalia"
+        class="img-fluid"
+        style="max-width: 650px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+        >
+    </div>
+    </section>
+<!-- End Charms Collection Section -->
+
+  <!-- End Header/Navigation -->
+
+  <!-- Start Hero Section -->
+  
+  <!-- End Hero Section -->
+
+
+
+  <!-- Start Workshop Promo Section -->
+  <!-- End Workshop Promo Section -->
+
+ 
+      
+{% endblock %}

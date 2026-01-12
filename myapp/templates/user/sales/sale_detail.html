@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+		<div class="container">
+		<a class="navbar-brand" href={% url 'index' %}><img class="logo" src={% static 'images/big_logo_black.png' %} alt="Ovalia Atelier"></a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsFurni">
+			<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+				<li>
+					<a class="nav-link" href= {% url 'index' %}>Accueil</a>
+				</li>
+				</li class="nav-item active">
+          <a class="nav-link" style="text-color:black;" href="{% url 'boutique' %}">Boutique</a>
+        </li>
+        <li ><a class="nav-link" href={% url 'shop' %}>Bracelet</a></li>
+        
+        <li><a class="nav-link" href={% url 'event' %}>Evenement</a></li>
+        <li ><a class="nav-link" href={% url 'faq' %}>FAQ</a></li>
+        <li><a class="nav-link" href={% url 'contact' %}>Contact</a></li>
+        <li><a class="nav-link" href="{% url 'cart' %}"><img src={% static 'images/cart.svg' %}></a></li>
+			</ul>
+			
+		</div>
+		</div>
+	</nav>
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="ratio ratio-4x3 bg-white shadow-sm">
+          {% if sale.image %}
+            <img src="{{ sale.image.url }}" alt="{{ sale.name }}" class="img-fluid rounded object-fit-cover">
+          {% else %}
+            <img src="{% static 'images/product-1.png' %}" alt="{{ sale.name }}" class="img-fluid rounded object-fit-cover">
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <p class="text-muted mb-1">{{ sale.get_category_display|default:sale.category }}</p>
+        <h1 class="fw-bold mb-3">{{ sale.name }}</h1>
+        <p class="lead">{{ sale.description|default:"Création originale réalisée dans notre atelier." }}</p>
+        <ul class="list-unstyled text-muted mb-4">
+          <li><strong>Numéro :</strong> {{ sale.numero }}</li>
+          <li><strong>Matériau :</strong> {{ sale.materiaux }}</li>
+          <li><strong>Prix :</strong> ${{ sale.price }}</li>
+        </ul>
+        <form method="post" action="{% url 'add_to_cart' sale.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-dark btn-lg">Ajouter au panier</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Devenir membre</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- MATERIAL DESIGN ICONIC FONT -->
+		<link rel="stylesheet" href="{% static 'fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}">
+		<link href="{% static 'css/style2.css' %}" rel="stylesheet">
+	</head>
+
+	<body>
+
+		<div class="wrapper" style="background-image: url('{% static  'images/bg-registration-form-1.jpg' %}');">
+			<div class="inner">
+				<div class="image-holder">
+					<img src={% static "images/necklace.jpg" %} alt="">
+				</div>
+
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					<h3>Devenir membre</h3>
+				  
+					<div class="form-group">
+					  <input type="text" name="first_name" value="{{ request.POST.first_name }}" placeholder="Prénom" class="form-control">
+					  <input type="text" name="last_name" value="{{ request.POST.last_name }}" placeholder="Nom" class="form-control">
+					</div>
+				  
+					<div class="form-wrapper">
+					  <input type="text" name="username" value="{{ request.POST.username }}" placeholder="Nom d'utilisateur" class="form-control">
+					  <i class="zmdi zmdi-user"></i>
+					</div>
+				  
+					<div class="form-wrapper">
+					  <input type="email" name="email" value="{{ request.POST.email }}" placeholder="Adresse Email" class="form-control">
+					  <i class="zmdi zmdi-email"></i>
+					</div>
+				  
+					<div class="form-wrapper">
+					  <input type="file" name="file" class="form-control">
+					  <i class="zmdi zmdi-file"></i>
+					</div>
+				  
+					<div class="form-wrapper">
+					  <input type="password" name="password1" placeholder="Mot de passe" class="form-control">
+					  <i class="zmdi zmdi-lock"></i>
+					</div>
+				  
+					<div class="form-wrapper">
+					  <input type="password" name="password2" placeholder="Confirmer le mot de passe" class="form-control">
+					  <i class="zmdi zmdi-lock"></i>
+					</div>
+				  
+					<button type="submit">S'enregistrer
+					  <i class="zmdi zmdi-arrow-right"></i>
+					</button>
+					{% if form.errors %}
+					<div class="alert alert-danger" role="alert">
+						<ul>
+						{% for field in form %}
+							{% for error in field.errors %}
+							<li><strong>{{ field.label }}:</strong> {{ error }}</li>
+							{% endfor %}
+						{% endfor %}
+						{% for error in form.non_field_errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+						</ul>
+					</div>
+					{% endif %}
+									
+					<br>
+					<a href="{% url 'login' %}" style="display: flex; justify-content: center; align-items: center;">
+					  Vous avez déjà un compte ? Se connecter
+					</a>
+				  </form>
+				  
+				  
+			</div>
+		</div>
+		
+	</body>
+</html>

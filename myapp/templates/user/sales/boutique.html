@@ -1,0 +1,328 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+/* ================= OVALIA SHOP ================= */
+
+body {
+  background-color: #f3ede6;
+  color: #2b2b2b;
+}
+
+/* Section */
+.shop-section {
+  padding: 80px 0;
+  background-color: #f3ede6;
+}
+
+/* Headings */
+.shop-section h1,
+.shop-section h5 {
+  font-family: "Playfair Display", serif;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+}
+
+.shop-section p {
+  color: #7a6f65;
+}
+
+/* Header */
+.shop-header {
+  margin-bottom: 50px;
+}
+
+.shop-header .btn {
+  border-radius: 30px;
+  padding: 10px 24px;
+}
+
+/* Card */
+.shop-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 18px 35px rgba(0,0,0,0.08);
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Image */
+.shop-card img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+/* Body */
+.shop-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.shop-category {
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.shop-price {
+  font-weight: 500;
+  margin: 12px 0 18px;
+}
+
+/* Actions */
+.shop-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.shop-actions a,
+.shop-actions button {
+  border-radius: 30px;
+  font-size: 0.85rem;
+  padding: 10px 0;
+}
+
+.shop-actions a {
+  border: 1px solid #2b2b2b;
+  background: transparent;
+  color: #2b2b2b;
+  text-align: center;
+  text-decoration: none;
+}
+
+.shop-actions a:hover {
+  background: #2b2b2b;
+  color: #fff;
+}
+
+.shop-actions button {
+  background: #2b2b2b;
+  color: #fff;
+  border: none;
+}
+.filter-bar {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: #ffffff;
+  padding: 18px 22px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+}
+
+.filter-bar input,
+.filter-bar select {
+  padding: 10px 14px;
+  border-radius: 30px;
+  border: 1px solid #d7c5b3;
+  font-size: 0.9rem;
+  min-width: 200px;
+}
+</style>
+
+<!-- ================= NAVBAR (UNCHANGED) ================= -->
+<nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'index' %}">
+      <img class="logo" src="{% static 'images/big_logo_black.png' %}" alt="Ovalia Atelier">
+    </a>
+
+    <div class="collapse navbar-collapse">
+      <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+        <li><a class="nav-link" href="{% url 'index' %}">Accueil</a></li>
+        <li><a class="nav-link active" href="{% url 'boutique' %}">Boutique</a></li>
+        <li><a class="nav-link" href="{% url 'shop' %}">Bracelet</a></li>
+        <li><a class="nav-link" href="{% url 'event' %}">Evenement</a></li>
+        <li><a class="nav-link" href="{% url 'faq' %}">FAQ</a></li>
+        <li><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+        <li>
+          <a class="nav-link" href="{% url 'cart' %}">
+            <img src="{% static 'images/cart.svg' %}">
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= SHOP ================= -->
+<section class="shop-section">
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="row shop-header align-items-center">
+      <div class="col-lg-8">
+        <h1>Boutique Ovalia</h1>
+        <p class="lead">
+          Découvrez nos créations prêtes à expédier et ajoutez vos coups de cœur à votre panier.
+        </p>
+      </div>
+      <div class="col-lg-4 text-lg-end">
+        <a class="btn btn-outline-dark" href="{% url 'cart' %}">
+          Voir le panier
+        </a>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-lg-12">
+        <div class="filter-bar">
+
+          <!-- Search -->
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Rechercher un bijou..."
+          >
+
+          <!-- Category -->
+          <select id="categoryFilter">
+            <option value="">Toutes les catégories</option>
+            {% for sale in sales %}
+              <option value="{{ sale.category }}">{{ sale.get_category_display|default:sale.category }}</option>
+            {% endfor %}
+          </select>
+
+          <!-- Price -->
+          <input
+            type="number"
+            id="priceFilter"
+            placeholder="Prix max ($)"
+          >
+
+        </div>
+      </div>
+    </div>
+    <!-- PRODUCTS -->
+    <div class="row g-4">
+      {% for sale in sales %}
+      <div class="col-sm-6 col-lg-4 product-card"
+        data-name="{{ sale.name|lower }}"
+        data-category="{{ sale.category|lower }}"
+        data-price="{{ sale.price }}">
+
+        <div class="shop-card">
+
+          {% if sale.image %}
+            <img src="{{ sale.image.url }}" alt="{{ sale.name }}">
+          {% else %}
+            <img src="{% static 'images/product-1.png' %}" alt="{{ sale.name }}">
+          {% endif %}
+
+          <div class="shop-card-body">
+
+            <p class="shop-category">
+              {{ sale.get_category_display|default:sale.category }}
+            </p>
+
+            <h5>{{ sale.name }}</h5>
+
+            <p>
+              {{ sale.description|default:"Pièce unique par Ovalia."|truncatewords:20 }}
+            </p>
+
+            <div class="shop-price">
+              ${{ sale.price }}
+            </div>
+
+            <!-- ACTIONS (UNCHANGED FUNCTIONALITY) -->
+            <div class="shop-actions">
+
+              <!-- DETAILS -->
+              <a href="{% url 'sale_detail' sale.id %}" class="flex-fill">
+                Détails
+              </a>
+
+              <!-- ADD TO CART -->
+              <form method="post" action="{% url 'add_to_cart' sale.id %}" class="flex-fill">
+                {% csrf_token %}
+                <button type="submit" class="w-100">
+                  Ajouter
+                </button>
+              </form>
+
+            </div>
+
+          </div>
+        </div>
+          
+      </div>
+      {% empty %}
+      <div class="col-12 text-center py-5">
+        <p class="lead">Aucun produit n'est disponible pour le moment.</p>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const searchInput = document.getElementById("searchInput");
+  const categoryFilter = document.getElementById("categoryFilter");
+  const priceFilter = document.getElementById("priceFilter");
+  const products = document.querySelectorAll(".product-card");
+
+  function filterProducts() {
+    const searchValue = searchInput.value.toLowerCase();
+    const categoryValue = categoryFilter.value.toLowerCase();
+    const priceValue = priceFilter.value;
+
+    products.forEach(product => {
+      const name = product.dataset.name;
+      const category = product.dataset.category;
+      const price = parseFloat(product.dataset.price);
+
+      let visible = true;
+
+      if (searchValue && !name.includes(searchValue)) {
+        visible = false;
+      }
+
+      if (categoryValue && category !== categoryValue) {
+        visible = false;
+      }
+
+      if (priceValue && price > parseFloat(priceValue)) {
+        visible = false;
+      }
+
+      product.style.display = visible ? "block" : "none";
+    });
+  }
+
+  searchInput.addEventListener("input", filterProducts);
+  categoryFilter.addEventListener("change", filterProducts);
+  priceFilter.addEventListener("input", filterProducts);
+
+});
+
+document.querySelectorAll(".shop-actions form").forEach(form => {
+  form.addEventListener("submit", function (e) {
+    e.preventDefault(); // ⛔ stop immediate reload
+
+    const button = form.querySelector("button");
+
+    // Visual feedback
+    button.disabled = true;
+    button.innerText = "Ajouté ✓";
+    button.style.backgroundColor = "#3c7a3c";
+
+    // ⏳ wait 3 seconds, THEN submit for real
+    setTimeout(() => {
+      form.submit();
+    }, 1000);
+  });
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Liste des Produits</h1>
+    <br>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a href="{% url 'add_product' %}" class="btn btn-primary">Ajouter un produit</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Nom</th>
+                            <th>Description</th>
+                            <th>Matériau</th>
+                            <th>Cou </th>
+                            <th>Poignée </th>
+                            <th>Cheville</th>
+                            <th>Disponible</th>
+                            <th>Créé le</th>
+                            <th>Numéro</th>
+                            <th>Modifier</th>
+                            <th>Supprimer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>
+                                {% if product.image %}
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" width="70">
+                                {% else %}
+                                    Aucune image
+                                {% endif %}
+                            </td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.description|truncatewords:10 }}</td>
+                            <td>{{ product.materiaux }}</td>
+                            <td>{{ product.cou }}</td>
+                            <td>{{ product.poignee }}</td>
+                            <td>{{ product.cheville }}</td>
+                            <td>
+                                <form method="POST" action="{% url 'available' product.id %}">
+                                    {% csrf_token %}
+                                    <input 
+                                        type="checkbox" 
+                                        onchange="this.form.submit()" 
+                                        {% if product.available %}checked{% endif %}
+                                        title="Disponible ?"
+                                    >
+                                </form>
+                            </td>
+                            
+                            <td>{{ product.created|date:"d/m/Y H:i" }}</td>
+                            <td>{{ product.numero }}</td>
+                            <td>
+                                <a href="{% url 'update_product'  product.id  %}" class="btn btn-sm btn-warning">Modifier</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'delete_product'  product.id  %}" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce produit ?');">Supprimer</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+{% endblock %}

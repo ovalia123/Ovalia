@@ -1,0 +1,413 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}	
+  <body>
+    <style>
+      .oval-link {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background-color: #f3ebe3;
+        color: #1c1c1c;
+        font-family: 'Georgia', serif;
+        min-height: 100vh;
+        align-items: center;
+        padding: 
+      }
+      
+      .oval-link .text {
+        padding: 20%;
+        background-color: #f3ebe3;
+      }
+      
+      .oval-link h2 {
+        font-size: 2.4rem;
+        font-weight: normal;
+        line-height: 1.3;
+        margin-bottom: 2rem;
+        font-family: 'Roboto', sans-serif;
+      }
+      
+      .oval-link p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #333;
+        margin-bottom: 2rem;
+      }
+      
+      .cta-btn {
+        display: inline-block;
+        background-color: #F3EBE3;
+        border: 3px solid #947459;
+        color: black;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 0.8rem 1.5rem;
+        transition: background 0.3s ease;
+      }
+      
+      .cta-btn:hover {
+        background-color: #947459;
+      }
+      
+      .oval-link .media {
+        background-color: #947459;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        height: 100%;
+        overflow: hidden;
+        
+      }
+      
+      .oval-link .media img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        max-width:600px;
+        max-height:700px;
+        float:left;
+      }
+      
+      @media (max-width: 768px) {
+        .oval-link {
+          grid-template-columns: 1fr;
+        }
+      
+        .oval-link .media {
+          order: -1;
+        }
+      
+        .oval-link .text {
+          padding: 2rem;
+          text-align: center;
+        }
+      
+        .cta-btn {
+          margin-top: 1.5rem;
+        }
+      }
+      @media (max-width: 768px) {
+        .oval-link {
+          grid-template-columns: 1fr;
+        }
+      
+        .oval-link .media {
+          order: -1;
+        }
+      
+        .oval-link .text {
+          padding: 2rem;
+          text-align: center;
+        }
+      
+        .cta-btn {
+          margin-top: 1.5rem;
+        }
+      }
+
+      .testimonial {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background-color: #f3ebe3;
+        padding: 4rem 2rem;
+        align-items: center;
+        font-family: 'Georgia', serif;
+        gap: 2rem;
+      }
+      
+      .testimonial-text {
+        background-color: #f3ebe3;
+        padding: 2rem;
+      }
+      
+      .testimonial-text h2 {
+        font-size: 2rem;
+        font-weight: normal;
+        margin-bottom: 1rem;
+        font-family: 'Dancing Script', cursive;
+      }
+      
+      .stars {
+        font-size: 1.5rem;
+        color: #c9a063;
+        margin-bottom: 1rem;
+      }
+      
+      .testimonial-text p {
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 1rem;
+        color: #333;
+      }
+      
+      .testimonial-text .author {
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+      }
+      
+      .read-more-btn {
+        padding: 0.7rem 1.5rem;
+        background: none;
+        border: 1px solid #b48b66;
+        color: #1c1c1c;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      
+      .read-more-btn:hover {
+        background: #c9a063;
+        color: white;
+      }
+      
+      .testimonial-image-wrapper {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .image-background {
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        background-color: #9d846d;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        border-radius: 0.5rem;
+      }
+      
+      .testimonial-image {
+        max-width: 100%;
+        border-radius: 0.5rem;
+        z-index: 1;
+        position: relative;
+        object-fit: cover;
+      }
+      
+      @media (max-width: 768px) {
+        .testimonial {
+          grid-template-columns: 1fr;
+        }
+      
+        .testimonial-image-wrapper {
+          margin-top: 2rem;
+        }
+      }
+      </style>
+    <!-- Start Header/Navigation -->
+    <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+      <div class="container">
+      <a class="navbar-brand" href={% url 'index' %}><img class="logo" src={% static 'images/big_logo_black.png' %} alt="Ovalia Atelier"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+          <li class="nav-item active">
+            <a class="nav-link" href= {% url 'index' %}>Accueil</a>
+          </li>
+            <a class="nav-link" style="text-color:black;" href="{% url 'boutique' %}">Boutique</a>
+          </li>
+          <li><a class="nav-link" href={% url 'shop' %}>Bracelet</a></li>
+          
+          <li><a class="nav-link" href={% url 'event' %}>Evenement</a></li>
+          <li><a class="nav-link" href={% url 'faq' %}>FAQ</a></li>
+          <li><a class="nav-link" href={% url 'contact' %}>Contact</a></li>
+			    <li><a class="nav-link" href="{% url 'cart' %}"><img src={% static 'images/cart.svg' %}></a></li>
+
+        </ul>
+       
+      </div>
+      </div>
+    </nav>
+  
+    <!-- End Header/Navigation -->
+  
+    <!-- End Hero Section -->
+    <section class="oval-link">
+      <div class="text">
+        <h2>UN LIEN, UN LIEN INVISIBLE – NOUS LE RENDONS VISIBLE</h2>
+        <p>
+          Nos bracelets sont plus que de simples accessoires – ils sont le symbole de votre amour, de votre amitié ou de votre complicité.
+          En transformant ce lien invisible en un bracelet visible, nous créons des souvenirs qui durent toute une vie.
+          Nos bracelets permanents sont une manière unique de célébrer votre relation et de montrer de manière très personnelle ce que vous représentez l’un pour l’autre.
+        </p>
+        <a href="https://book.squareup.com/appointments/mzgetogunly9bg/location/LZSK4WQK919VC/services" target="_blank" class="cta-btn">Prendre rendez-vous</a>
+      </div>
+      <div class="media">
+        <img src={% static 'images/EA6A4DEF-28D7-445E-9CB0-006D09C280FF.JPG' %} alt="Ovalia Atelier"></div>
+      </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="untree_co-section product-section" style="background-color:;">
+      <div class="container">
+        
+        <h3 class="product-title" style="font-size:70px;font-weight:2000;">Découvrez une vaste sélection de bracelets</h3>
+        <p "product-price"> Explore notre sélection raffinée de bracelets permanents et choisis la chaîne qui sublimera ton style.
+        Que tu recherches l’éclat prestigieux de l’or massif 14k, la solidité accessible de l’or massif 10k, la brillance durable de l’or rempli (Gold Filled) ou l’élégance classique de l’argent sterling (.925), tu trouveras chez Ovalia le bijou qui te correspond.</p>
+        <div class="row">
+          <!-- Products Grid -->
+          <div class="col-md-12 col-lg-12">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4 mb-5  product-card" data-material="{{ product.materiaux }}" data-name="{{ product.name|lower }}">
+                  <div class="product-item" href="">
+                    <img src={% static 'images/back.jpg' %} class="img-card">
+                    <h3 class="product-title">Or massif 14k</h3>
+                    <br>
+                    <p><a href="{% url 'or14k' %}" class="btn-card">Explorer</a></p>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-5  product-card" data-material="{{ product.materiaux }}" data-name="{{ product.name|lower }}">
+                  <div class="product-item" href="">
+                    <img src={% static 'images/IMG_8451.JPG' %} class="img-card">
+                    <h3 class="product-title">Or massif 10k</h3>
+                    <br>
+                    <p><a href="{% url 'or10k' %}" class="btn-card">Explorer</a></p>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-5  product-card" data-material="{{ product.materiaux }}" data-name="{{ product.name|lower }}">
+                  <div class="product-item" href="">
+                    <img src={% static 'images/IMG_0689.JPG' %} class="img-card">
+                    <h3 class="product-title">Or rempli</h3>
+                    <br>
+                    <p><a href="{% url 'orrempli' %}" class="btn-card">Explorer</a></p>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-5  product-card" data-material="{{ product.materiaux }}" data-name="{{ product.name|lower }}">
+                  <div class="product-item" href="">
+                    <img src={% static 'images/IMG_4827.JPG' %} class="img-card">
+                    <h3 class="product-title">Argent sterling</h3>
+                    <br>
+                    <p><a href="{% url 'argent' %}" class="btn-card">Explorer</a></p>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-5  product-card" data-material="{{ product.materiaux }}" data-name="{{ product.name|lower }}">
+                  <div class="product-item" href="">
+                    <img src={% static 'images/charms.jpg' %} class="img-card">
+                    <h3 class="product-title">Charms</h3>
+                    <br>
+                    <p><a href="{% url 'charms' %}" class="btn-card">Explorer</a></p>
+                  </div>
+                </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- Start Product Section -->
+  
+    <!-- End Product Section -->
+  
+    <!-- Start Why Choose Us Section -->
+ 
+    <!-- End Why Choose Us Section -->
+  
+    <!-- ... les autres sections (We Help, Blog, Testimonials, Footer) continuent avec le même principe de mise à jour -->
+  
+    <!-- ... (sections précédentes inchangées) ... -->
+  
+    <!-- Start We Help Section -->
+    <div class="we-help-section" style="background-color:white;">
+    <div class="container">
+      <div class="row justify-content-between">
+      <div class="col-lg-7 mb-5 mb-lg-0">
+        <div class="imgs-grid">
+        <div class="grid grid-1"><img src={% static 'images/IMG_2785.JPG' %} alt="Ovalia Atelier"></div>
+        <div class="grid grid-2"><img src=	{% static 'images/IMG_8451.JPG' %} alt="Bijoux Personnalisés"></div>
+        <div class="grid grid-3"><img src=	{% static 'images/EA6A4DEF-28D7-445E-9CB0-006D09C280FF.JPG' %} alt="Création Collaborative"></div>
+        </div>
+      </div>
+
+      <div class="col-lg-5 ps-lg-5">
+        <h3 class="product-title" style="font-size:40px;font-weight:2000;">Pourquoi choisir Ovalia ?</h3>
+            <p>Ovalia vous propose bien plus que des bijoux : une expérience de création unique, un service client à l'écoute, et un engagement envers l’artisanat local.</p>
+            <div class="row my-5">
+              <div class="col-6 col-md-6">
+                <div class="feature">
+                  <div class="icon">
+                    <img src={% static 'images/truck.svg' %} alt="Livraison" class="imf-fluid">
+                  </div>
+                  <h3>Livraison rapide </h3>
+                  <p>Commandez en ligne et recevez vos bijoux rapidement.</p>
+                </div>
+              </div>
+              <div class="col-6 col-md-6">
+                <div class="feature">
+                  <div class="icon">
+                    <img src={% static 'images/bag.svg' %} alt="Facile" class="imf-fluid">
+                  </div>
+                  <h3>Commande simplifiée</h3>
+                  <p>Un site pensé pour vous permettre de réserver un atelier ou acheter un bijou en quelques clics.</p>
+                </div>
+              </div>
+              <div class="col-6 col-md-6">
+                <div class="feature">
+                  <div class="icon">
+                    <img src={% static 'images/support.svg' %} alt="Support" class="imf-fluid">
+                  </div>
+                  <h3>Service client</h3>
+                  <p>Notre équipe est disponible en tout temps pour répondre à vos questions et vous guider.</p>
+                </div>
+              </div>
+              <div class="col-6 col-md-6">
+                <div class="feature">
+                  <div class="icon">
+                    <img src={% static 'images/return.svg' %} alt="Retour" class="imf-fluid">
+                  </div>
+                  <h3>Retour facile</h3>
+                  <p>Remplacement unique gratuit si votre breloque du bijou permanent est perdue ou cassée dans les 7* jours suivant l'achat d'origine. </p>
+                </div>
+              </div>
+            </div>
+      </div>
+      </div>
+    </div>
+    </div>
+    <!-- End We Help Section -->
+    
+
+
+    <section class="testimonial">
+      <div class="testimonial-text">
+        <h2>Ce que disent nos clients</h2>
+        <div class="stars">★★★★★</div>
+        <p>
+          Nous sommes allés pour une activité mère/fille. Nous avons adoré notre expérience, ma fille était ravie de son bracelet. J'adore le mien également. Beaucoup de choix donc ça été plus long choisir que de le faire car nous voulions notre bracelet parfait et la propriétaire était super patiente. Je recommande fortement.
+        </p>
+        <p class="author">– Jessica Chaloux</p>
+      </div>
+      <div class="testimonial-image-wrapper">
+        <div class="image-background"></div>
+        <img src={% static 'images/2551DB84-BAAB-44D5-9E76-E42FBEE7586F.JPG' %} alt="Clients heureux" class="testimonial-image">
+      </div>
+    </section>
+  
+    
+  </body>
+  {% endblock %}

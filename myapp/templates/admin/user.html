@@ -1,0 +1,79 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block content %}	
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Liste des utilisateurs
+                    </h1>
+                    <br>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                       <!-- <div class="card-header py-3">
+                            <a href= type="button" class="btn btn-primary">Ajouter une annonce</a>
+                        </div>-->
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>UserName</th>
+                                            <th>Nom</th>
+                                            <th>email</th>
+                                            <th>Diplome</th>
+                                            <th>Verifier</th>
+                                            <th>Supprimer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for user in users %}
+                                        <tr>
+                                            <td>{{ user.username }}</td>
+                                            <td>{{ user.first_name }} {{ user.last_name }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td>
+                                                {% if user.file %}
+                                                  <a href="{{ user.file.url }}" download>Télécharger</a>
+                                                {% else %}
+                                                  Aucun fichier
+                                                {% endif %}
+                                              </td>
+                                            <td>
+                                                <form method="POST" action="{% url 'verify_user' user.id %}">
+                                                    {% csrf_token %}
+                                                    <input 
+                                                    type="checkbox" 
+                                                    onchange="this.form.submit()" 
+                                                    {% if user.is_verified %}checked{% endif %} 
+                                                    title="Vérifié ?"
+                                                    >
+                                                </form>
+                                            </td>
+                                            <td><a href= type="button" class="btn btn-danger">Delete</a></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                            
+                                            
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+
+    {% endblock %}

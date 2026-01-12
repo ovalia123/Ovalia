@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="fr">
+
+{% block content %}	
+<body>
+  <!-- Start Header/Navigation -->
+  <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+		<div class="container">
+		<a class="navbar-brand" href={% url 'index' %}><img class="logo" src={% static 'images/big_logo_black.png' %} alt="Ovalia Atelier"></a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsFurni">
+			<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+				<li>
+					<a class="nav-link" href= {% url 'index' %}>Accueil</a>
+				</li>
+				</li>
+          <a class="nav-link" style="text-color:black;" href="{% url 'boutique' %}">Boutique</a>
+        </li>
+        <li class="nav-item active"><a class="nav-link" href={% url 'shop' %}>Bracelet</a></li>
+        
+        <li><a class="nav-link" href={% url 'event' %}>Evenement</a></li>
+        <li ><a class="nav-link" href={% url 'faq' %}>FAQ</a></li>
+        <li><a class="nav-link" href={% url 'contact' %}>Contact</a></li>
+        <li><a class="nav-link" href="{% url 'cart' %}"><img src={% static 'images/cart.svg' %}></a></li>
+			</ul>
+			
+		</div>
+		</div>
+	</nav>
+  <!-- End Header/Navigation -->
+
+  <!-- Start Hero Section -->
+  
+  <!-- End Hero Section -->
+
+  <!-- Start Product Section -->
+  <div class="untree_co-section product-section">
+    <div class="container">
+      
+      <h3 class="product-title">Or rempli</h3>
+      <p "product-price" >Les bijoux en or rempli se composent d’une couche solide d’or liée à un métal de base comme le laiton. Ils sont étanches et ne s’oxydent ni ne se corrodent facilement. Bien qu’ils soient moins chers que l’or massif, les bijoux en or rempli sont plus durables et peuvent durer des années avec un entretien minimal.</p>
+      <div class="row">
+        <!-- Products Grid -->
+        <div class="col-md-12 col-lg-12">
+          <div class="row">
+            {% for product in products %}
+            {% if product.available %}
+              <div class="col-12 col-md-6 col-lg-4 mb-5  product-card" data-material="{{ product.materiaux }}" data-name="{{ product.name|lower }}">
+                <a class="product-item" href="">
+                  {% if product.image %}
+                  <img src="{{ product.image.url }}" class="img-card">
+                  {% else %}
+                  <img src="/static/images/product-placeholder.jpg" class="img-fluid product-thumbnail">
+                  {% endif %}
+                  <h3 class="product-title">{{ product.name }}</h3>
+                  <p >Bracelet No. {{ product.numero }}  </p>
+                  <p >Comme bracelet - {{ product.poignee }} $ </p>
+                  <p >Au cou - {{ product.cou }} $</p>
+                  <p >à la cheville - {{ product.cheville }} $ </p>
+                </a>
+              </div>
+            {% endif %}
+            {% empty %}
+            <div class="col-12">
+              <div class="alert alert-info">
+                Aucun produit disponible pour le moment.
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Product Section -->
+
+
+  <!-- Start Workshop Promo Section -->
+  <!-- End Workshop Promo Section -->
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const checkboxes = document.querySelectorAll('.material-filter');
+        const products = document.querySelectorAll('.product-card');
+        const nameInput = document.getElementById('name-filter');
+      
+        function applyFilters() {
+          const selectedMaterials = Array.from(checkboxes)
+                                         .filter(c => c.checked)
+                                         .map(c => c.value);
+      
+          const nameFilter = nameInput.value.trim().toLowerCase();
+      
+          products.forEach(product => {
+            const material = product.dataset.material;
+            const name = product.dataset.name;
+      
+            const matchesMaterial = selectedMaterials.length === 0 || selectedMaterials.includes(material);
+            const matchesName = name.includes(nameFilter);
+      
+            if (matchesMaterial && matchesName) {
+              product.style.display = '';
+            } else {
+              product.style.display = 'none';
+            }
+          });
+        }
+      
+        checkboxes.forEach(cb => cb.addEventListener('change', applyFilters));
+        nameInput.addEventListener('input', applyFilters);
+      });
+      </script>
+      
+{% endblock %}
